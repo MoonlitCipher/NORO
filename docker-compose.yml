@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nextus-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-nextus}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-nextus_secret}
+      POSTGRES_DB: ${DB_NAME:-nextus_pdms}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-nextus} -d ${DB_NAME:-nextus_pdms}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: nextus-redis
+    restart: always
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./pdms-backend
+      dockerfile: Dockerfile
+    container_name: nextus-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${DB_USER:-nextus}:${DB_PASSWORD:-nextus_secret}@postgres:5432/${DB_NAME:-nextus_pdms}?schema=public
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET:-dev_jwt_secret_key_change_in_production_min_32_chars_12345678}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev_refresh_jwt_secret_change_in_production_min_32_chars_87654321}
+      JWT_EXPIRATION: 3600s
+      JWT_REFRESH_EXPIRATION: 604800s
+      PAYMENT_WEBHOOK_SECRET: ${PAYMENT_WEBHOOK_SECRET:-whsec_demo_secret_key_for_testing_123456}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+
+volumes:
+  postgres_data:
+  redis_data:

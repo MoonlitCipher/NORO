@@ -1,21 +1,68 @@
+import { useState, useEffect } from "react";
 import {
   ArrowLeft,
   Bell,
   Truck,
-  CheckCircle,
   CreditCard,
-  Gift,
   ChevronRight,
+  Loader2,
+  CheckCheck,
 } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
+import { notificationsApi } from "../../api/client";
 
 function Notifications() {
   const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadNotifs() {
+      setLoading(true);
+      try {
+        const list = await notificationsApi.getAll();
+        setNotifications(list || []);
+      } catch (err) {
+        console.error("Failed to load notifications", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadNotifs();
+  }, []);
+
+  const handleClear = async () => {
+    try {
+      await notificationsApi.clearAll();
+      setNotifications([]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleItemClick = async (notif) => {
+    if (!notif.isRead) {
+      try {
+        await notificationsApi.markRead(notif.id);
+        setNotifications((prev) =>
+          prev.map((n) => (n.id === notif.id ? { ...n, isRead: true } : n)),
+        );
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+
+    if (notif.metadata?.trackingNumber) {
+      navigate(`/customer/track?id=${notif.metadata.trackingNumber}`);
+    } else {
+      navigate("/customer/orders");
+    }
+  };
+
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   return (
     <div className="app">
-
       <header className="page-header">
         <button
           className="back-btn"
@@ -31,7 +78,6 @@ function Notifications() {
       </header>
 
       <main className="notifications-page">
-
         {/* TOP SUMMARY */}
         <div className="notification-summary">
           <div className="notification-summary-icon">
@@ -40,156 +86,84 @@ function Notifications() {
 
           <div>
             <strong>Notifications</strong>
-            <span>You have 2 new updates</span>
+            <span>
+              {unreadCount > 0 ? `You have ${unreadCount} new update${unreadCount > 1 ? "s" : ""}` : "All caught up"}
+            </span>
           </div>
 
-          <button className="clear-btn">
-            Clear
-          </button>
+          {notifications.length > 0 && (
+            <button className="clear-btn" onClick={handleClear}>
+              Clear
+            </button>
+          )}
         </div>
 
-        {/* TODAY */}
-        <section className="notification-group">
+        {loading ? (
+          <div style={{ textAlign: "center", padding: "40px", color: "#666" }}>
+            <Loader2 className="animate-spin" size={32} style={{ display: "inline-block", marginBottom: "12px" }} />
+            <p>Loading notifications...</p>
+          </div>
+        ) : notifications.length > 0 ? (
+          <section className="notification-group">
+            <h2>Recent Updates</h2>
 
-          <h2>Today</h2>
+            {notifications.map((notif) => (
+              <div
+                key={notif.id}
+                className={`notification-item ${!notif.isRead ? "unread" : ""}`}
+                onClick={() => handleItemClick(notif)}
+                style={{ cursor: "pointer" }}
+              >
+                <div
+                  className={`notification-item-icon ${
+                    notif.type === "PAYMENT" ? "payment" : "delivery"
+                  }`}
+                >
+                  {notif.type === "PAYMENT" ? (
+                    <CreditCard size={21} />
+                  ) : (
+                    <Truck size={21} />
+                  )}
+                </div>
 
-          <div
-            className="notification-item unread"
-            onClick={() => navigate("/customer/track")}
-          >
-            <div className="notification-item-icon delivery">
-              <Truck size={21} />
-            </div>
+                <div className="notification-item-content">
+                  <div className="notification-item-title">
+                    <strong>{notif.title}</strong>
+                    {!notif.isRead && <span className="new-dot"></span>}
+                  </div>
 
-            <div className="notification-item-content">
-              <div className="notification-item-title">
-                <strong>Delivery is on the way</strong>
-                <span className="new-dot"></span>
+                  <p>{notif.message}</p>
+
+                  <small>
+                    {new Date(notif.createdAt).toLocaleDateString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      day: "numeric",
+                      month: "short",
+                    })}
+                  </small>
+                </div>
+
+                <ChevronRight size={18} />
               </div>
-
-              <p>
-                Your parcel <b>PDMS-10245</b> is currently in transit.
-              </p>
-
-              <small>10 minutes ago</small>
-            </div>
-
-            <ChevronRight size={18} />
+            ))}
+          </section>
+        ) : (
+          <div style={{
+            background: "#ffffff",
+            padding: "36px 20px",
+            borderRadius: "16px",
+            textAlign: "center",
+            marginTop: "20px",
+          }}>
+            <CheckCheck size={40} color="#10b981" style={{ margin: "0 auto 12px" }} />
+            <strong style={{ fontSize: "16px", display: "block", marginBottom: "6px" }}>No notifications</strong>
+            <p style={{ color: "#777", fontSize: "14px" }}>
+              You don't have any new alerts right now.
+            </p>
           </div>
-
-          <div className="notification-item unread">
-
-            <div className="notification-item-icon payment">
-              <CreditCard size={21} />
-            </div>
-
-            <div className="notification-item-content">
-              <div className="notification-item-title">
-                <strong>Payment successful</strong>
-                <span className="new-dot"></span>
-              </div>
-
-              <p>
-                Your payment of <b>₹160</b> for PDMS-10245 was successful.
-              </p>
-
-              <small>35 minutes ago</small>
-            </div>
-
-            <ChevronRight size={18} />
-
-          </div>
-
-        </section>
-
-        {/* YESTERDAY */}
-        <section className="notification-group">
-
-          <h2>Yesterday</h2>
-
-          <div className="notification-item">
-
-            <div className="notification-item-icon delivered">
-              <CheckCircle size={21} />
-            </div>
-
-            <div className="notification-item-content">
-
-              <strong>Delivery completed</strong>
-
-              <p>
-                Your parcel <b>PDMS-10231</b> was successfully delivered.
-              </p>
-
-              <small>Yesterday, 5:42 PM</small>
-
-            </div>
-
-            <ChevronRight size={18} />
-
-          </div>
-
-          <div className="notification-item">
-
-            <div className="notification-item-icon offer">
-              <Gift size={21} />
-            </div>
-
-            <div className="notification-item-content">
-
-              <strong>Special offer</strong>
-
-              <p>
-                Get <b>₹50 OFF</b> on your first delivery.
-              </p>
-
-              <small>Yesterday, 11:20 AM</small>
-
-            </div>
-
-            <ChevronRight size={18} />
-
-          </div>
-
-        </section>
-
-        {/* EARLIER */}
-        <section className="notification-group">
-
-          <h2>Earlier</h2>
-
-          <div className="notification-item">
-
-            <div className="notification-item-icon welcome">
-              <Bell size={21} />
-            </div>
-
-            <div className="notification-item-content">
-
-              <strong>Welcome to PDMS</strong>
-
-              <p>
-                Your customer account has been successfully created.
-              </p>
-
-              <small>28 Sep 2026</small>
-
-            </div>
-
-            <ChevronRight size={18} />
-
-          </div>
-
-        </section>
-
-        {/* END MESSAGE */}
-        <div className="notification-end">
-          <CheckCircle size={18} />
-          <span>You're all caught up</span>
-        </div>
-
+        )}
       </main>
-
     </div>
   );
 }

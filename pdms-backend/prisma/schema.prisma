@@ -1,0 +1,505 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  PARTNER
+  ADMIN
+  OPERATIONS
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum KycStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum DocumentType {
+  ID_PROOF
+  DRIVING_LICENSE
+  VEHICLE_RC
+}
+
+enum DocumentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum VehicleType {
+  BIKE
+  SCOOTER
+  VAN
+}
+
+enum DeliverySpeed {
+  STANDARD
+  EXPRESS
+}
+
+enum PackageType {
+  DOCUMENT
+  SMALL_PARCEL
+  MEDIUM_PARCEL
+  LARGE_PARCEL
+  FRAGILE_ITEM
+}
+
+enum OrderStatus {
+  PLACED
+  ASSIGNED
+  PICKUP_IN_PROGRESS
+  PICKED_UP
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum AssignmentStatus {
+  OFFERED
+  ACCEPTED
+  REJECTED
+  EXPIRED
+  CANCELLED
+}
+
+enum DeliveryEventType {
+  BOOKING_CREATED
+  PAYMENT_RECEIVED
+  PARTNER_ASSIGNED
+  PICKUP_STARTED
+  PARCEL_COLLECTED
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  UPI
+  CARD
+  WALLET
+  CASH
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum RefundStatus {
+  PENDING
+  PROCESSED
+  FAILED
+}
+
+enum EarningStatus {
+  PENDING
+  CREDITED
+  SETTLED
+}
+
+enum SettlementStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum NotificationType {
+  ORDER_STATUS
+  PAYMENT
+  SYSTEM
+  PROMO
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String?       @unique
+  phone        String        @unique
+  passwordHash String
+  name         String
+  role         Role          @default(CUSTOMER)
+  status       UserStatus    @default(ACTIVE)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  addresses       Address[]
+  refreshTokens   RefreshToken[]
+  partnerProfile  PartnerProfile?
+  ordersAsCustomer Order[]        @relation("CustomerOrders")
+  notifications   Notification[]
+  supportTickets  SupportTicket[]
+  auditLogs       AuditLog[]      @relation("ActorAuditLogs")
+
+  @@index([role])
+  @@index([phone])
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid())
+  tokenHash String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userAgent String?
+  ipAddress String?
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label      String   @default("Home")
+  street     String
+  area       String
+  city       String
+  state      String   @default("Tamil Nadu")
+  postalCode String
+  latitude   Float?
+  longitude  Float?
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model PartnerProfile {
+  id                  String            @id @default(uuid())
+  userId              String            @unique
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kycStatus           KycStatus         @default(PENDING)
+  isAvailable         Boolean           @default(false)
+  currentLat          Float?
+  currentLng          Float?
+  rating              Float             @default(5.0)
+  totalDeliveries     Int               @default(0)
+  bankAccountNumber   String?
+  bankIfsc            String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  vehicles            Vehicle[]
+  documents           PartnerDocument[]
+  orders              Order[]           @relation("PartnerOrders")
+  assignments         DeliveryAssignment[]
+  trackingPoints      TrackingPoint[]
+  earnings            PartnerEarning[]
+  settlements         Settlement[]
+
+  @@index([kycStatus, isAvailable])
+}
+
+model PartnerDocument {
+  id                 String         @id @default(uuid())
+  partnerId          String
+  partner            PartnerProfile @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  docType            DocumentType
+  documentNumber     String
+  fileUrl            String
+  verificationStatus DocumentStatus @default(PENDING)
+  rejectionReason    String?
+  verifiedAt         DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@index([partnerId])
+}
+
+model Vehicle {
+  id          String         @id @default(uuid())
+  partnerId   String
+  partner     PartnerProfile @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  vehicleType VehicleType    @default(BIKE)
+  make        String
+  model       String
+  year        Int
+  plateNumber String         @unique
+  isVerified  Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([partnerId])
+}
+
+model PricingRule {
+  id             String        @id @default(uuid())
+  name           String
+  vehicleType    VehicleType   @default(BIKE)
+  deliverySpeed  DeliverySpeed @default(STANDARD)
+  baseFarePaise  Int           @default(5000)
+  baseDistanceKm Float         @default(2.0)
+  perKmPaise     Int           @default(1500)
+  perKgPaise     Int           @default(1000)
+  minFarePaise   Int           @default(4000)
+  isActive       Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@unique([vehicleType, deliverySpeed])
+}
+
+model Order {
+  id                     String             @id @default(uuid())
+  trackingNumber         String             @unique
+  customerId             String
+  customer               User               @relation("CustomerOrders", fields: [customerId], references: [id])
+  partnerId              String?
+  partner                PartnerProfile?    @relation("PartnerOrders", fields: [partnerId], references: [id])
+  
+  status                 OrderStatus        @default(PLACED)
+  deliverySpeed          DeliverySpeed      @default(STANDARD)
+  
+  pickupAddress          String
+  pickupCity             String             @default("Nagercoil")
+  pickupLat              Float
+  pickupLng              Float
+  pickupContactName      String
+  pickupContactPhone     String
+  
+  dropAddress            String
+  dropCity               String             @default("Nagercoil")
+  dropLat                Float
+  dropLng                Float
+  dropContactName        String
+  dropContactPhone       String
+  
+  packageType            PackageType        @default(SMALL_PARCEL)
+  packageWeightKg        Float              @default(1.0)
+  packageDescription     String?
+  specialInstructions    String?
+  
+  distanceKm             Float              @default(3.5)
+  estimatedDurationMins  Int                @default(25)
+  
+  fareBasePaise          Int
+  fareDistancePaise      Int
+  fareWeightPaise        Int
+  fareSpeedPaise         Int
+  fareTotalPaise         Int
+  currency               String             @default("INR")
+  
+  cancellationReason     String?
+  cancelledAt            DateTime?
+  pickupTime             DateTime?
+  deliveredAt            DateTime?
+  proofOfDeliveryUrl     String?
+  proofNotes             String?
+  
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  assignments            DeliveryAssignment[]
+  events                 DeliveryEvent[]
+  trackingPoints         TrackingPoint[]
+  payments               Payment[]
+  earnings               PartnerEarning[]
+  refunds                Refund[]
+  supportTickets         SupportTicket[]
+
+  @@index([customerId])
+  @@index([partnerId])
+  @@index([status])
+  @@index([trackingNumber])
+  @@index([createdAt])
+}
+
+model DeliveryAssignment {
+  id          String           @id @default(uuid())
+  orderId     String
+  order       Order            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  partnerId   String
+  partner     PartnerProfile   @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  status      AssignmentStatus @default(OFFERED)
+  offeredAt   DateTime         @default(now())
+  respondedAt DateTime?
+  expiresAt   DateTime
+  createdAt   DateTime         @default(now())
+
+  @@index([orderId])
+  @@index([partnerId])
+  @@index([status])
+}
+
+model DeliveryEvent {
+  id          String            @id @default(uuid())
+  orderId     String
+  order       Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  partnerId   String?
+  eventType   DeliveryEventType
+  title       String
+  description String
+  latitude    Float?
+  longitude   Float?
+  createdAt   DateTime          @default(now())
+
+  @@index([orderId])
+}
+
+model TrackingPoint {
+  id         String         @id @default(uuid())
+  orderId    String
+  order      Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  partnerId  String
+  partner    PartnerProfile @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  latitude   Float
+  longitude  Float
+  speed      Float?
+  heading    Float?
+  recordedAt DateTime       @default(now())
+
+  @@index([orderId, recordedAt])
+}
+
+model Payment {
+  id             String        @id @default(uuid())
+  orderId        String
+  order          Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amountPaise    Int
+  currency       String        @default("INR")
+  method         PaymentMethod @default(UPI)
+  status         PaymentStatus @default(PENDING)
+  provider       String        @default("MOCK_GATEWAY")
+  providerTxnId  String?
+  idempotencyKey String?       @unique
+  signature      String?
+  failureReason  String?
+  paidAt         DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  refunds        Refund[]
+
+  @@index([orderId])
+  @@index([status])
+}
+
+model Refund {
+  id              String       @id @default(uuid())
+  paymentId       String
+  payment         Payment      @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  orderId         String
+  order           Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amountPaise     Int
+  reason          String
+  status          RefundStatus @default(PENDING)
+  referenceNumber String?
+  processedAt     DateTime?
+  createdAt       DateTime     @default(now())
+
+  @@index([paymentId])
+  @@index([orderId])
+}
+
+model PartnerEarning {
+  id               String         @id @default(uuid())
+  partnerId        String
+  partner          PartnerProfile @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  orderId          String
+  order            Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  grossAmountPaise Int
+  commissionPaise  Int
+  netAmountPaise   Int
+  status           EarningStatus  @default(PENDING)
+  createdAt        DateTime       @default(now())
+
+  @@index([partnerId])
+  @@index([orderId])
+}
+
+model Settlement {
+  id              String           @id @default(uuid())
+  partnerId       String
+  partner         PartnerProfile   @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  amountPaise     Int
+  status          SettlementStatus @default(PENDING)
+  referenceNumber String?
+  processedAt     DateTime?
+  createdAt       DateTime         @default(now())
+
+  @@index([partnerId])
+  @@index([status])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      NotificationType @default(ORDER_STATUS)
+  isRead    Boolean          @default(false)
+  metadata  Json?
+  createdAt DateTime         @default(now())
+
+  @@index([userId, isRead])
+}
+
+model SupportTicket {
+  id          String         @id @default(uuid())
+  userId      String
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderId     String?
+  order       Order?         @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  subject     String
+  message     String
+  priority    TicketPriority @default(MEDIUM)
+  status      TicketStatus   @default(OPEN)
+  response    String?
+  respondedAt DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String?
+  actor     User?    @relation("ActorAuditLogs", fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([action])
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
