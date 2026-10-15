@@ -8,6 +8,7 @@ import {
 import ParticleBackground from "./components/ParticleBackground";
 import { AuthProvider } from "./context/AuthContext";
 import { BookingProvider } from "./context/BookingContext";
+import { CustomerProvider } from "./customer/CustomerContext";
 
 // Landing
 import Landing from "./pages/landing/Landing";
@@ -27,6 +28,11 @@ import OrderDetails from "./pages/customer/OrderDetails";
 import Profile from "./pages/customer/Profile";
 import Notifications from "./pages/customer/Notifications";
 import Addresses from "./pages/customer/Addresses";
+import {
+  SupportPage,
+  ReviewPage,
+  InvoicePage,
+} from "./pages/customer/CustomerPages";
 
 // Partner Portal
 import PartnerLogin from "./pages/auth/PartnerLogin";
@@ -60,56 +66,59 @@ function Backdrop() {
   return show ? <ParticleBackground /> : null;
 }
 
-function App() {
+export default function App() {
   return (
     <AuthProvider>
       <BookingProvider>
-        <BrowserRouter>
-          <Backdrop />
+        <CustomerProvider>
+          <BrowserRouter>
+            <Backdrop />
 
-          <Routes>
-            {/* Landing */}
-            <Route path="/" element={<Landing />} />
+            <Routes>
+              {/* Landing */}
+              <Route path="/" element={<Landing />} />
 
-            {/* Customer Routes */}
-            <Route path="/customer/login" element={<CustomerLogin />} />
-            <Route path="/customer/register" element={<CustomerRegister />} />
-            <Route path="/customer" element={<CustomerHome />} />
-            <Route path="/customer/book" element={<BookDelivery />} />
-            <Route path="/customer/package" element={<PackageDetails />} />
-            <Route path="/customer/fare" element={<FareEstimate />} />
-            <Route path="/customer/payment" element={<Payment />} />
-            <Route path="/customer/confirmation" element={<BookingConfirmation />} />
-            <Route path="/customer/track" element={<TrackDelivery />} />
-            <Route path="/customer/orders" element={<Orders />} />
-            <Route path="/customer/order/:id" element={<OrderDetails />} />
-            <Route path="/customer/profile" element={<Profile />} />
-            <Route path="/customer/notifications" element={<Notifications />} />
-            <Route path="/customer/addresses" element={<Addresses />} />
+              {/* Customer Routes */}
+              <Route path="/customer/login" element={<CustomerLogin />} />
+              <Route path="/customer/register" element={<CustomerRegister />} />
+              <Route path="/customer" element={<CustomerHome />} />
+              <Route path="/customer/book" element={<BookDelivery />} />
+              <Route path="/customer/package" element={<PackageDetails />} />
+              <Route path="/customer/fare" element={<FareEstimate />} />
+              <Route path="/customer/payment" element={<Payment />} />
+              <Route path="/customer/confirmation" element={<BookingConfirmation />} />
+              <Route path="/customer/track" element={<TrackDelivery />} />
+              <Route path="/customer/orders" element={<Orders />} />
+              <Route path="/customer/order/:id" element={<OrderDetails />} />
+              <Route path="/customer/profile" element={<Profile />} />
+              <Route path="/customer/notifications" element={<Notifications />} />
+              <Route path="/customer/addresses" element={<Addresses />} />
+              <Route path="/customer/support" element={<SupportPage />} />
+              <Route path="/customer/review/:id" element={<ReviewPage />} />
+              <Route path="/customer/invoice/:id" element={<InvoicePage />} />
 
-            {/* Partner Routes */}
-            <Route path="/partner/login" element={<PartnerLogin />} />
-            <Route path="/partner/register" element={<PartnerRegister />} />
-            <Route path="/partner" element={<PartnerHome />} />
-            <Route path="/partner/requests" element={<DeliveryRequests />} />
-            <Route path="/partner/active" element={<ActiveDelivery />} />
-            <Route path="/partner/earnings" element={<Earnings />} />
-            <Route path="/partner/history" element={<DeliveryHistory />} />
-            <Route path="/partner/kyc" element={<KYC />} />
+              {/* Partner Routes */}
+              <Route path="/partner/login" element={<PartnerLogin />} />
+              <Route path="/partner/register" element={<PartnerRegister />} />
+              <Route path="/partner" element={<PartnerHome />} />
+              <Route path="/partner/requests" element={<DeliveryRequests />} />
+              <Route path="/partner/active" element={<ActiveDelivery />} />
+              <Route path="/partner/earnings" element={<Earnings />} />
+              <Route path="/partner/history" element={<DeliveryHistory />} />
+              <Route path="/partner/kyc" element={<KYC />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/partners" element={<AdminPartners />} />
-            <Route path="/admin/orders" element={<AdminOrders />} />
-            <Route path="/admin/tracking" element={<AdminLiveTracking />} />
-            <Route path="/admin/pricing" element={<AdminPricing />} />
-            <Route path="/admin/settlements" element={<AdminSettlements />} />
-          </Routes>
-        </BrowserRouter>
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/partners" element={<AdminPartners />} />
+              <Route path="/admin/orders" element={<AdminOrders />} />
+              <Route path="/admin/tracking" element={<AdminLiveTracking />} />
+              <Route path="/admin/pricing" element={<AdminPricing />} />
+              <Route path="/admin/settlements" element={<AdminSettlements />} />
+            </Routes>
+          </BrowserRouter>
+        </CustomerProvider>
       </BookingProvider>
     </AuthProvider>
   );
 }
-
-export default App;
