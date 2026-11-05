@@ -1658,7 +1658,7 @@ export function TrackingPage() {
             <strong>
               Ravi Kumar <BadgeCheck size={15} />
             </strong>
-            <small>4.9 ★ · 1,248 deliveries · KA 05 MJ 2841</small>
+            <small><Star size={13} aria-hidden="true" /> 4.9 · 1,248 deliveries · KA 05 MJ 2841</small>
           </div>
           <button
             aria-label="Call partner"

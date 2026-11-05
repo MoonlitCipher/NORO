@@ -24,7 +24,7 @@
   height: 52px;
   flex-shrink: 0;
   border-radius: 14px;
-  background: #ed1c24;
+  background: var(--noro-red);
   color: white;
   display: flex;
   align-items: center;
@@ -89,7 +89,7 @@
   flex-shrink: 0;
   border-radius: 10px;
   background: #fff3bd;
-  color: #ed1c24;
+  color: var(--noro-red);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,12 +120,12 @@
 
 .pickup-marker {
   background: #fff3bd;
-  color: #ed1c24;
+  color: var(--noro-red);
 }
 
 .destination-marker {
   background: #ffe7e7;
-  color: #ed1c24;
+  color: var(--noro-red);
 }
 
 .order-route-content {
@@ -204,7 +204,7 @@
 }
 
 .total-row strong {
-  color: #ed1c24;
+  color: var(--noro-red);
   font-size: 18px;
 }
 
@@ -259,12 +259,12 @@
 }
 
 .timeline-item.completed .timeline-icon {
-  background: #ed1c24;
+  background: var(--noro-red);
   color: white;
 }
 
 .timeline-item.current .timeline-icon {
-  background: #ffd21f;
+  background: var(--noro-yellow);
   color: #222;
 }
 
@@ -302,7 +302,7 @@
   height: 50px;
   border: none;
   border-radius: 13px;
-  background: #ed1c24;
+  background: var(--noro-red);
   color: white;
   font-size: 14px;
   font-weight: 700;
@@ -316,10 +316,10 @@
 .details-support-btn {
   width: 100%;
   height: 48px;
-  border: 1px solid #ed1c24;
+  border: 1px solid var(--noro-red);
   border-radius: 13px;
   background: white;
-  color: #ed1c24;
+  color: var(--noro-red);
   font-size: 13px;
   font-weight: 700;
   display: flex;

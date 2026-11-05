@@ -70,7 +70,7 @@ function OrderDetails() {
   if (loading) {
     return (
       <div className="app" style={{ textAlign: "center", padding: "60px 20px" }}>
-        <Loader2 className="animate-spin" size={36} color="#ed1c24" style={{ margin: "0 auto 12px" }} />
+        <Loader2 className="animate-spin" size={36} color="#D4030B" style={{ margin: "0 auto 12px" }} />
         <p>Loading order details...</p>
       </div>
     );

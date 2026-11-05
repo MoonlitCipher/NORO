@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Truck,
   Phone,
   Lock,
   ArrowRight,
@@ -40,13 +39,13 @@ function PartnerLogin() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-logo" style={{ background: "#ed1c24", color: "#fff" }}>
-          <Truck size={38} />
+        <div className="auth-logo">
+          <img src="/NORO.png" alt="NORO" />
         </div>
 
         <h1>Partner Portal</h1>
         <p className="auth-subtitle">
-          Nextus Delivery Partner Sign In
+          NORO delivery partner sign in
         </p>
 
         {error && (
@@ -91,7 +90,7 @@ function PartnerLogin() {
             />
           </div>
 
-          <button className="auth-btn" type="submit" disabled={loading} style={{ background: "#ed1c24", color: "#fff" }}>
+          <button className="auth-btn" type="submit" disabled={loading}>
             {loading ? "Signing in..." : "Partner Sign In"}
             <ArrowRight size={20} />
           </button>

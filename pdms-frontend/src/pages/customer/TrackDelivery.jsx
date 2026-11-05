@@ -9,6 +9,7 @@ import {
   Check,
   Clock3,
   Loader2,
+  Star,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ordersApi } from "../../api/client";
@@ -173,7 +174,7 @@ function TrackDelivery() {
             <div className="partner-details">
               <strong>{partnerName}</strong>
               <span>PDMS Delivery Partner</span>
-              <small>⭐ {partnerRating} • {partnerDeliveries} deliveries</small>
+              <small><Star size={13} aria-hidden="true" /> {partnerRating} • {partnerDeliveries} deliveries</small>
             </div>
           </div>
 

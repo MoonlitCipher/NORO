@@ -69,7 +69,7 @@ function LiveTracking() {
 
                   {latestLoc && (
                     <div style={{ background: "#f0fdf4", padding: "8px 12px", borderRadius: "8px", margin: "8px 0", fontSize: "12px", color: "#166534" }}>
-                      📍 Last GPS: {latestLoc.latitude.toFixed(4)}, {latestLoc.longitude.toFixed(4)} ({latestLoc.speed || 0} km/h)
+                      <><MapPin size={14} style={{ verticalAlign: "middle", marginRight: 4 }} aria-hidden="true" /> Last GPS: {latestLoc.latitude.toFixed(4)}, {latestLoc.longitude.toFixed(4)} ({latestLoc.speed || 0} km/h)</>
                     </div>
                   )}
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Truck,
   User,
   Phone,
   Mail,
@@ -48,12 +47,12 @@ function CustomerRegister() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-logo">
-          <Truck size={38} />
+          <img src="/NORO.png" alt="NORO" />
         </div>
 
         <h1>Create Account</h1>
         <p className="auth-subtitle">
-          Start sending parcels with PDMS
+          Start sending with NORO across Nagercoil and Kanniyakumari.
         </p>
 
         {error && (

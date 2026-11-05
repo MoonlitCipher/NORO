@@ -98,7 +98,7 @@ function Addresses() {
       <main className="form-page" style={{ padding: "16px" }}>
         <button
           className="continue-btn"
-          style={{ marginBottom: "16px", background: "#ffd21f", color: "#171717" }}
+          style={{ marginBottom: "16px", background: "#FDE10F", color: "#171717" }}
           onClick={() => setShowAddForm(!showAddForm)}
         >
           <Plus size={20} />
@@ -175,7 +175,7 @@ function Addresses() {
               >
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                    <MapPin size={18} color="#ed1c24" />
+                    <MapPin size={18} color="#D4030B" />
                     <strong>{addr.label}</strong>
                     {addr.isDefault && (
                       <span style={{ fontSize: "11px", background: "#dcfce7", color: "#166534", padding: "2px 6px", borderRadius: "4px" }}>
@@ -203,7 +203,7 @@ function Addresses() {
                   )}
                   <button
                     onClick={() => handleDelete(addr.id)}
-                    style={{ background: "none", border: "none", cursor: "pointer", color: "#ed1c24" }}
+                    style={{ background: "none", border: "none", cursor: "pointer", color: "#D4030B" }}
                     title="Delete address"
                   >
                     <Trash2 size={18} />

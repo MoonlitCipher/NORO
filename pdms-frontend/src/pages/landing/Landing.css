@@ -18,9 +18,9 @@ html.lp-lock #root{
   --ink:#ffffff;
   --ink-muted:#ededed;
   --panel:#181818;
-  --white-btn:#ffd21f;   /* Nextus yellow */
+  --white-btn:#fde10f;   /* NORO logo yellow */
   --btn-ink:#111111;
-  --red:#ed1c24;
+  --red:#d4030b;         /* NORO logo red */
   --glass-fill:rgba(0,0,0,.78);
   --glass-line:rgba(255,255,255,.09);
 
@@ -61,7 +61,7 @@ html.lp-lock #root{
    mix-blend-mode:color (keeps the dots' brightness, swaps hue + saturation). */
 .lp-bg::after{
   content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:linear-gradient(120deg,#ffd21f 0%,#ffb81c 35%,#ff5a1f 68%,#ed1c24 100%);
+  background:linear-gradient(120deg,#fde10f 0%,#f2a10d 35%,#e26214 68%,#d4030b 100%);
   mix-blend-mode:color;
 }
 
@@ -76,52 +76,11 @@ html.lp-lock #root{
   transform:translateY(calc(-2.4 * var(--u)));line-height:1;color:var(--ink);
   text-decoration:none;white-space:nowrap;
 }
-.lp-links{
-  position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-50%) translateX(calc(-23 * var(--u)));
-  display:flex;align-items:center;gap:calc(24.3 * var(--u));white-space:nowrap;
-}
-.lp-links a{
-  color:var(--ink-muted);text-decoration:none;font-size:calc(11.5 * var(--u));
-  font-weight:500;letter-spacing:calc(-0.15 * var(--u));line-height:1;
-  transition:color .18s ease;
-}
-.lp-links a:hover{color:#fff}
-.lp-actions{margin-left:auto;display:flex;align-items:center;gap:calc(6.8 * var(--u))}
-
+.lp-logo img{display:block;width:calc(58 * var(--u));height:calc(58 * var(--u));object-fit:contain;border-radius:50%}
 .lp-btn{
   display:inline-flex;align-items:center;justify-content:center;
   font-family:inherit;text-decoration:none;white-space:nowrap;border:0;cursor:pointer;
 }
-.lp-login{
-  height:calc(28 * var(--u));padding:0 calc(12.9 * var(--u));
-  border-radius:calc(14 * var(--u));background:var(--panel);color:#e8e8e8;
-  font-size:calc(11.5 * var(--u));font-weight:500;letter-spacing:calc(-0.15 * var(--u));
-  transition:background .18s ease,color .18s ease;
-}
-.lp-login:hover{background:#232323;color:#fff}
-.lp-navstart{
-  height:calc(28 * var(--u));padding-left:calc(13.5 * var(--u));
-  padding-right:calc(14.5 * var(--u));border-radius:calc(14 * var(--u));
-  background:var(--white-btn);color:var(--btn-ink);font-size:calc(11.1 * var(--u));
-  font-weight:500;letter-spacing:0;gap:calc(7 * var(--u));
-  transition:background .18s ease;
-}
-.lp-navstart:hover{background:#ffe066}
-.lp-navstart .lp-arw{width:calc(11.5 * var(--u));height:calc(9.6 * var(--u))}
-
-.lp-burger{
-  display:none;margin-left:auto;width:calc(40 * var(--u));height:calc(28 * var(--u));
-  align-items:center;justify-content:center;background:var(--panel);
-  border-radius:calc(14 * var(--u));border:0;cursor:pointer;padding:0;
-}
-.lp-burger span{display:block;width:16px;height:1.5px;background:#ededed;border-radius:2px;position:relative}
-.lp-burger span::before,.lp-burger span::after{
-  content:"";position:absolute;left:0;width:16px;height:1.5px;background:#ededed;border-radius:2px;
-}
-.lp-burger span::before{top:-5px}
-.lp-burger span::after{top:5px}
-
 .lp-arw{flex:0 0 auto;display:block}
 
 /* ---------- hero content ---------- */
@@ -154,23 +113,10 @@ html.lp-lock #root{
   padding-left:calc(18.2 * var(--u));padding-right:calc(19.2 * var(--u));
   transition:background .18s ease,transform .18s ease;
 }
-.lp-primary:hover{background:#ffe066}
-.lp-ghost{
-  background:rgba(237,28,36,.82);color:#fff;padding:0 calc(17.4 * var(--u));
-  border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
-  transition:background .18s ease,border-color .18s ease;
-}
-.lp-ghost:hover{background:var(--red);border-color:rgba(255,255,255,.34)}
+.lp-primary:hover{background:#ffeb55}
 .lp-btn-lg .lp-arw{width:calc(13 * var(--u));height:calc(10.8 * var(--u))}
 
-.lp a:focus-visible,.lp button:focus-visible{outline:2px solid #ffd21f;outline-offset:3px;border-radius:99px}
-
-/* ---------- mobile menu (hidden on desktop) ---------- */
-.lp-menu{display:none}
-@keyframes lpMenuIn{
-  from{opacity:0;transform:translateY(-6px) scale(.985)}
-  to{opacity:1;transform:none}
-}
+.lp a:focus-visible{outline:2px solid #fde10f;outline-offset:3px;border-radius:99px}
 
 /* ==========================================================
    TABLET — max-width:1160px
@@ -184,15 +130,11 @@ html.lp-lock #root{
     );
   }
   .lp-nav{
-    height:max(58px, calc(67 * var(--u)));
+    height:104px;align-items:flex-start;padding-top:8px;
     padding-left:max(24px, calc(28 * var(--u)));
     padding-right:max(24px, calc(28 * var(--u)));
   }
-  .lp-links,.lp-actions{display:none}
-  .lp-burger{
-    display:flex;width:max(46px, calc(48 * var(--u)));
-    height:max(38px, calc(34 * var(--u)));border-radius:999px;
-  }
+  .lp-logo{transform:none}
   .lp-inner{max-width:calc(100vw - 48px)}
   .lp-sub{font-size:max(16px, calc(17.4 * var(--u)));line-height:max(25px, calc(27 * var(--u)))}
   .lp-ctas{margin-top:max(26px, calc(21.8 * var(--u)));gap:max(10px, calc(7 * var(--u)))}
@@ -201,32 +143,8 @@ html.lp-lock #root{
     font-size:max(15px, calc(13.3 * var(--u)));gap:max(10px, calc(9 * var(--u)));
   }
   .lp-primary{padding-left:max(21px, calc(18.2 * var(--u)));padding-right:max(22px, calc(19.2 * var(--u)))}
-  .lp-ghost{padding-left:max(20px, calc(17.4 * var(--u)));padding-right:max(21px, calc(18.4 * var(--u)))}
   .lp-btn-lg .lp-arw{width:max(14px, calc(13 * var(--u)));height:max(11.6px, calc(10.8 * var(--u)))}
 
-  .lp-menu{
-    position:absolute;top:calc(max(58px, calc(67 * var(--u))) - 6px);
-    right:max(24px, calc(28 * var(--u)));width:min(320px, calc(100vw - 48px));
-    background:rgba(10,10,12,.86);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);
-    border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:10px 8px 12px;
-    flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.55);
-    transform-origin:top right;z-index:5;
-  }
-  .lp-menu.open{display:flex;animation:lpMenuIn .18s ease both}
-  .lp-menu a{
-    color:var(--ink-muted);text-decoration:none;font-size:15px;font-weight:500;
-    letter-spacing:calc(-0.15 * var(--u));padding:12px 14px;border-radius:12px;
-    transition:background .18s ease,color .18s ease;
-  }
-  .lp-menu a:hover{background:rgba(255,255,255,.06);color:#fff}
-  .lp-menu .lp-divider{height:1px;background:rgba(255,255,255,.08);margin:8px 14px}
-  .lp-menu .lp-mstart{
-    display:flex;align-items:center;justify-content:center;gap:9px;
-    background:var(--white-btn);color:var(--btn-ink);margin:6px 8px 0;padding:13px 16px;
-    border-radius:14px;font-weight:600;
-  }
-  .lp-menu .lp-mstart:hover{background:#ffe066;color:var(--btn-ink)}
-  .lp-menu .lp-mstart .lp-arw{width:13px;height:11px}
 }
 
 /* ==========================================================
@@ -234,9 +152,8 @@ html.lp-lock #root{
    ========================================================== */
 @media (max-width:552px){
   .lp{--u:1px}
-  .lp-nav{height:56px;padding:0 20px}
-  .lp-logo{font-size:22px;letter-spacing:-.4px}
-  .lp-burger{width:42px;height:36px}
+  .lp-nav{height:100px;padding:8px 20px}
+  .lp-logo img{width:44px;height:44px}
   .lp-inner{
     position:absolute;left:0;right:0;top:50%;width:auto;max-width:none;
     padding:0 20px;transform:translateY(-47%);
@@ -250,11 +167,7 @@ html.lp-lock #root{
   .lp-ctas{margin-top:24px;gap:10px;transform:none;flex-wrap:wrap}
   .lp-btn-lg{height:46px;border-radius:23px;font-size:15px;gap:9px}
   .lp-primary{padding-left:20px;padding-right:21px}
-  .lp-ghost{padding-left:19px;padding-right:20px}
   .lp-btn-lg .lp-arw{width:13px;height:11px}
-  .lp-menu{top:50px;left:16px;right:16px;width:auto}
-  .lp-menu a{font-size:15.5px;padding:13px 14px}
-  .lp-menu .lp-mstart{padding:14px 16px}
 }
 
 /* narrow phones: CTA pair stops fitting at 354px */
@@ -278,15 +191,10 @@ html.lp-lock #root{
 .lp.lp-anim .lp-ln{overflow:hidden;padding-top:.26em;margin-top:-.26em}
 .lp.lp-anim .lp-lni{transform:translateY(100%)}
 .lp.lp-anim .lp-logo,
-.lp.lp-anim .lp-links a,
-.lp.lp-anim .lp-actions .lp-btn,
-.lp.lp-anim .lp-burger,
 .lp.lp-anim .lp-sub,
 .lp.lp-anim .lp-ctas .lp-btn{opacity:0}
 .lp.lp-anim .lp-lni,
 .lp.lp-anim .lp-logo,
-.lp.lp-anim .lp-links a,
-.lp.lp-anim .lp-actions .lp-btn,
 .lp.lp-anim .lp-sub,
 .lp.lp-anim .lp-ctas .lp-btn{will-change:transform,opacity}
 
@@ -317,24 +225,13 @@ html.lp-lock #root{
 .lp.lp-anim.lp-go .lp-ln:nth-child(1) .lp-lni{animation-delay:.12s}
 .lp.lp-anim.lp-go .lp-ln:nth-child(2) .lp-lni{animation-delay:.22s}
 .lp.lp-anim.lp-go .lp-logo{animation:lpLogoIn .62s var(--e-soft) .46s both}
-.lp.lp-anim.lp-go .lp-links a{animation:lpLiftIn .55s var(--e-soft) both}
-.lp.lp-anim.lp-go .lp-links a:nth-child(1){animation-delay:.540s}
-.lp.lp-anim.lp-go .lp-links a:nth-child(2){animation-delay:.585s}
-.lp.lp-anim.lp-go .lp-links a:nth-child(3){animation-delay:.630s}
-.lp.lp-anim.lp-go .lp-links a:nth-child(4){animation-delay:.675s}
-.lp.lp-anim.lp-go .lp-links a:nth-child(5){animation-delay:.720s}
 .lp.lp-anim.lp-go .lp-sub{animation:lpSubIn .85s var(--e-reveal) .58s both}
-.lp.lp-anim.lp-go .lp-login{animation:lpPillIn .55s var(--e-soft) .68s both}
-.lp.lp-anim.lp-go .lp-burger{animation:lpPillIn .55s var(--e-soft) .68s both}
-.lp.lp-anim.lp-go .lp-navstart{animation:lpPillIn .55s var(--e-soft) .73s both}
 .lp.lp-anim.lp-go .lp-ctas .lp-primary{animation:lpPillIn .70s var(--e-reveal) .90s both}
-.lp.lp-anim.lp-go .lp-ctas .lp-ghost{animation:lpPillIn .70s var(--e-reveal) .97s both}
 
 @media (max-width:552px){
   .lp.lp-anim.lp-go .lp-sub{animation-name:lpSubInFlat}
   .lp.lp-anim.lp-go .lp-lni{animation-duration:.92s}
   .lp.lp-anim.lp-go .lp-ctas .lp-primary{animation-delay:.84s}
-  .lp.lp-anim.lp-go .lp-ctas .lp-ghost{animation-delay:.90s}
 }
 
 /* reduced motion */
@@ -342,9 +239,6 @@ html.lp-lock #root{
   .lp.lp-anim .lp-ln{overflow:visible;padding-top:0;margin-top:0}
   .lp.lp-anim .lp-lni{transform:none}
   .lp.lp-anim .lp-logo,
-  .lp.lp-anim .lp-links a,
-  .lp.lp-anim .lp-actions .lp-btn,
-  .lp.lp-anim .lp-burger,
   .lp.lp-anim .lp-sub,
   .lp.lp-anim .lp-ctas .lp-btn{opacity:1}
   .lp *{transition:none!important;animation:none!important}

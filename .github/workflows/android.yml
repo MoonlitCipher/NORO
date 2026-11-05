@@ -1,0 +1,64 @@
+name: Android app
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_base_url:
+        description: Public HTTPS API base URL, for example https://api.example.com/api/v1
+        required: false
+        type: string
+  push:
+    branches: [main, master]
+    paths:
+      - "pdms-frontend/**"
+      - ".github/workflows/android.yml"
+  pull_request:
+    paths:
+      - "pdms-frontend/**"
+      - ".github/workflows/android.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pdms-frontend
+    env:
+      VITE_API_BASE_URL: ${{ inputs.api_base_url || vars.NEXTUS_API_BASE_URL || 'http://10.0.2.2:3000/api/v1' }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: pdms-frontend/package-lock.json
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web app and sync Android project
+        run: npm run mobile:sync
+
+      - name: Build debug APK
+        working-directory: pdms-frontend/android
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextus-android-debug
+          path: pdms-frontend/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14

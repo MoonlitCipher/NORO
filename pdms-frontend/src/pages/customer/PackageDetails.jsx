@@ -4,6 +4,7 @@ import {
   Scale,
   FileText,
   ChevronRight,
+  Check,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useBooking } from "../../context/BookingContext";
@@ -33,7 +34,7 @@ function PackageDetails() {
         {/* PROGRESS */}
         <div className="booking-progress">
           <div className="progress-step completed">
-            <span>✓</span>
+            <span><Check size={14} aria-hidden="true" /></span>
             <p>Route</p>
           </div>
 
@@ -123,7 +124,7 @@ function PackageDetails() {
                 key={w}
                 type="button"
                 style={{
-                  borderColor: booking.packageWeightKg === w ? "#ed1c24" : undefined,
+                  borderColor: booking.packageWeightKg === w ? "#D4030B" : undefined,
                   fontWeight: booking.packageWeightKg === w ? "bold" : "normal",
                 }}
                 onClick={() => updateBooking({ packageWeightKg: w })}

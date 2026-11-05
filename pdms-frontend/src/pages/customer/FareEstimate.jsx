@@ -7,6 +7,7 @@ import {
   CreditCard,
   ChevronRight,
   Loader2,
+  Check,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useBooking } from "../../context/BookingContext";
@@ -88,14 +89,14 @@ function FareEstimate() {
         {/* PROGRESS */}
         <div className="booking-progress">
           <div className="progress-step completed">
-            <span>✓</span>
+            <span><Check size={14} aria-hidden="true" /></span>
             <p>Route</p>
           </div>
 
           <div className="progress-line active"></div>
 
           <div className="progress-step completed">
-            <span>✓</span>
+            <span><Check size={14} aria-hidden="true" /></span>
             <p>Package</p>
           </div>
 

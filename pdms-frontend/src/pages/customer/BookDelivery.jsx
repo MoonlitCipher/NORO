@@ -5,6 +5,7 @@ import {
   Package,
   Clock3,
   Truck,
+  Check,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useBooking } from "../../context/BookingContext";
@@ -123,7 +124,7 @@ function BookDelivery() {
               </div>
 
               {booking.deliverySpeed === "EXPRESS" && (
-                <div className="option-check">✓</div>
+                <div className="option-check"><Check size={14} aria-hidden="true" /></div>
               )}
             </div>
 
@@ -141,7 +142,7 @@ function BookDelivery() {
               </div>
 
               {booking.deliverySpeed === "STANDARD" && (
-                <div className="option-check">✓</div>
+                <div className="option-check"><Check size={14} aria-hidden="true" /></div>
               )}
             </div>
           </div>

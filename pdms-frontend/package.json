@@ -6,16 +6,20 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "mobile:sync": "npm run build && cap sync android",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
     "lucide-react": "^1.49.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@eslint/js": "^10.0.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  ShieldAlert,
   Phone,
   Lock,
   ArrowRight,
@@ -40,13 +39,13 @@ function AdminLogin() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-logo" style={{ background: "#171717", color: "#ffd21f" }}>
-          <ShieldAlert size={38} />
+        <div className="auth-logo">
+          <img src="/NORO.png" alt="NORO" />
         </div>
 
         <h1>Operations Console</h1>
         <p className="auth-subtitle">
-          Nextus Administrator & Dispatch Control
+          NORO operations and dispatch control
         </p>
 
         {error && (
@@ -91,7 +90,7 @@ function AdminLogin() {
             />
           </div>
 
-          <button className="auth-btn" type="submit" disabled={loading} style={{ background: "#171717", color: "#ffd21f" }}>
+          <button className="auth-btn" type="submit" disabled={loading}>
             {loading ? "Authenticating..." : "Sign In to Console"}
             <ArrowRight size={20} />
           </button>

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 /**
  * Bright floating-particle backdrop in the Nextus brand colours
- * (yellow #ffd21f + red #ed1c24). Light and airy on purpose — it sits
+ * (yellow #FDE10F + red #D4030B). Light and airy on purpose — it sits
  * behind the white cards of the customer app and the auth screens.
  */
 const COLORS = ["255,210,31", "237,28,36", "255,170,0"];
@@ -60,7 +60,7 @@ function ParticleBackground() {
           const dy = parts[i].y - parts[j].y;
           const d = Math.hypot(dx, dy);
           if (d < LINK) {
-            ctx.strokeStyle = `rgba(237,28,36,${(1 - d / LINK) * 0.16})`;
+            ctx.strokeStyle = `rgba(212,3,11,${(1 - d / LINK) * 0.16})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(parts[i].x, parts[i].y);

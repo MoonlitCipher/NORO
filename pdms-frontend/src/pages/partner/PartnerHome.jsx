@@ -142,11 +142,11 @@ function PartnerHome() {
         {activeJob ? (
           <section
             className="form-card"
-            style={{ borderLeft: "5px solid #ed1c24", cursor: "pointer" }}
+            style={{ borderLeft: "5px solid #D4030B", cursor: "pointer" }}
             onClick={() => navigate("/partner/active")}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-              <span style={{ fontSize: "12px", fontWeight: "bold", color: "#ed1c24", textTransform: "uppercase" }}>
+              <span style={{ fontSize: "12px", fontWeight: "bold", color: "#D4030B", textTransform: "uppercase" }}>
                 ● Active Delivery Task
               </span>
               <span className="status-badge">{activeJob.status.replace("_", " ")}</span>
@@ -169,7 +169,7 @@ function PartnerHome() {
           </section>
         ) : (
           <section className="form-card" style={{ textAlign: "center", padding: "20px" }}>
-            <Truck size={36} color="#ffd21f" style={{ margin: "0 auto 8px" }} />
+            <Truck size={36} color="#FDE10F" style={{ margin: "0 auto 8px" }} />
             <h3 style={{ margin: "4px 0" }}>No Active Task</h3>
             <p style={{ color: "#777", fontSize: "14px", marginBottom: "14px" }}>
               {isOnline
@@ -214,7 +214,7 @@ function PartnerHome() {
             style={{ textAlign: "center", cursor: "pointer", padding: "16px" }}
             onClick={() => navigate("/partner/requests")}
           >
-            <Package size={28} color="#ffd21f" style={{ margin: "0 auto 8px" }} />
+            <Package size={28} color="#FDE10F" style={{ margin: "0 auto 8px" }} />
             <strong style={{ display: "block" }}>Job Requests</strong>
             <small style={{ color: "#666" }}>{availableCount} available</small>
           </div>
@@ -224,7 +224,7 @@ function PartnerHome() {
             style={{ textAlign: "center", cursor: "pointer", padding: "16px" }}
             onClick={() => navigate("/partner/history")}
           >
-            <Clock3 size={28} color="#ed1c24" style={{ margin: "0 auto 8px" }} />
+            <Clock3 size={28} color="#D4030B" style={{ margin: "0 auto 8px" }} />
             <strong style={{ display: "block" }}>Delivery History</strong>
             <small style={{ color: "#666" }}>Past deliveries</small>
           </div>

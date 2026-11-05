@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Loader2,
   AlertCircle,
+  LockKeyhole,
 } from "lucide-react";
 import { useBooking } from "../../context/BookingContext";
 import { useAuth } from "../../context/AuthContext";
@@ -277,7 +278,7 @@ function Payment() {
         </button>
 
         <p className="secure-payment">
-          🔒 Your payment information is secure
+          <LockKeyhole size={14} aria-hidden="true" /> Your payment information is secure
         </p>
       </main>
     </div>

@@ -158,7 +158,7 @@ function Pricing() {
                         style={{
                           width: "100%",
                           padding: "8px",
-                          background: "#ffd21f",
+                          background: "#FDE10F",
                           border: "none",
                           borderRadius: "8px",
                           fontWeight: "bold",

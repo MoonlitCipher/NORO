@@ -78,7 +78,7 @@ function DeliveryRequests() {
         ) : requests.length > 0 ? (
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {requests.map((job) => (
-              <div key={job.id} className="form-card" style={{ borderTop: "4px solid #ffd21f" }}>
+              <div key={job.id} className="form-card" style={{ borderTop: "4px solid #FDE10F" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
                   <strong style={{ fontSize: "16px" }}>{job.trackingNumber}</strong>
                   <span style={{ fontSize: "15px", fontWeight: "bold", color: "#16a34a" }}>
@@ -88,7 +88,7 @@ function DeliveryRequests() {
 
                 <div style={{ marginBottom: "12px", fontSize: "14px", color: "#444" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
-                    <MapPin size={16} color="#ed1c24" />
+                    <MapPin size={16} color="#D4030B" />
                     <span><b>Pickup:</b> {job.pickupAddress}</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
@@ -104,7 +104,7 @@ function DeliveryRequests() {
 
                 <button
                   className="continue-btn"
-                  style={{ background: "#ffd21f", color: "#171717", fontWeight: "bold" }}
+                  style={{ background: "#FDE10F", color: "#171717", fontWeight: "bold" }}
                   disabled={claimingId === job.id}
                   onClick={() => handleAccept(job.id)}
                 >

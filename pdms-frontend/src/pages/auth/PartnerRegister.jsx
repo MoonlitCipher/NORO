@@ -53,12 +53,12 @@ function PartnerRegister() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-logo" style={{ background: "#ed1c24", color: "#fff" }}>
-          <Truck size={38} />
+        <div className="auth-logo">
+          <img src="/NORO.png" alt="NORO" />
         </div>
 
         <h1>Join as Partner</h1>
-        <p className="auth-subtitle">Deliver parcels & earn with Nextus</p>
+        <p className="auth-subtitle">Deliver across Nagercoil and Kanniyakumari with NORO.</p>
 
         {error && (
           <div style={{
@@ -150,7 +150,7 @@ function PartnerRegister() {
             />
           </div>
 
-          <button className="auth-btn" type="submit" disabled={loading} style={{ background: "#ed1c24", color: "#fff" }}>
+          <button className="auth-btn" type="submit" disabled={loading}>
             {loading ? "Registering..." : "Complete Registration"}
             <ArrowRight size={20} />
           </button>

@@ -2,7 +2,7 @@ import { ArrowLeft, Box, History, Home, Plus, UserRound } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../customer/customer.css";
 
-export function NoroMark({ compact = false }) { return <div className={`noro-mark ${compact ? "compact" : ""}`}><span>N</span></div>; }
+export function NoroMark({ compact = false }) { return <div className={`noro-mark ${compact ? "compact" : ""}`}><img src="/NORO.png" alt="NORO" /></div>; }
 
 export function PageHeader({ eyebrow = "NORO CUSTOMER", title, back = "/customer", action }) {
   const navigate = useNavigate();

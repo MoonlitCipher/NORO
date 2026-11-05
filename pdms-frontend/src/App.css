@@ -200,7 +200,7 @@
   height: 36px;
   border-radius: 10px;
   background: #fff3bd;
-  color: #ed1c24;
+  color: var(--noro-red);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,12 +241,12 @@
 
 .pickup-marker {
   background: #fff3bd;
-  color: #ed1c24;
+  color: var(--noro-red);
 }
 
 .destination-marker {
   background: #ffe5e5;
-  color: #ed1c24;
+  color: var(--noro-red);
 }
 
 .order-route-content small {
@@ -307,12 +307,12 @@
 }
 
 .timeline-item.completed .timeline-icon {
-  background: #ed1c24;
+  background: var(--noro-red);
   color: white;
 }
 
 .timeline-item.current .timeline-icon {
-  background: #ffd21f;
+  background: var(--noro-yellow);
   color: #222;
 }
 

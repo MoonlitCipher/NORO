@@ -73,13 +73,11 @@ function CustomerHome() {
       {/* HEADER */}
       <header className="top-header">
         <div className="brand-row">
-          <div className="brand-logo">
-            <Truck size={30} />
-          </div>
+          <img className="brand-logo" src="/NORO.png" alt="NORO" />
 
           <div>
-            <h1>PDMS</h1>
-            <p>Parcel • Delivery • Management</p>
+            <h1>NORO</h1>
+            <p>Delivery made easy</p>
           </div>
         </div>
 
@@ -135,15 +133,7 @@ function CustomerHome() {
           </div>
 
           <div className="hero-graphic">
-            <div className="parcel-box">
-              <Package size={78} />
-            </div>
-
-            <div className="route-line"></div>
-
-            <div className="delivery-pin">
-              <Navigation size={28} />
-            </div>
+            <img className="hero-delivery-photo" src="/delivery-photo.jpg" alt="Delivery partner holding a parcel" />
           </div>
         </section>
 
@@ -294,7 +284,7 @@ function CustomerHome() {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
               }}
             >
-              <Package size={40} color="#ffd21f" style={{ margin: "0 auto 12px" }} />
+              <Package size={40} color="#FDE10F" style={{ margin: "0 auto 12px" }} />
               <strong style={{ display: "block", marginBottom: "6px" }}>No Active Delivery</strong>
               <p style={{ color: "#777", fontSize: "14px", marginBottom: "16px" }}>
                 Ready to send a parcel across town? Book in 3 simple steps.

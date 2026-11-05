@@ -156,7 +156,7 @@ function ActiveDelivery() {
 
           <div style={{ marginBottom: "12px", borderLeft: "2px dashed #ddd", paddingLeft: "14px", marginLeft: "6px" }}>
             <div style={{ marginBottom: "16px" }}>
-              <small style={{ color: "#ed1c24", fontWeight: "bold" }}>PICKUP</small>
+              <small style={{ color: "#D4030B", fontWeight: "bold" }}>PICKUP</small>
               <p style={{ margin: "2px 0", fontWeight: "600" }}>{activeJob.pickupAddress}</p>
               <small style={{ color: "#666" }}>
                 Contact: {activeJob.pickupContactName} • {activeJob.pickupContactPhone}
@@ -238,7 +238,7 @@ function ActiveDelivery() {
         {activeJob.status === "ASSIGNED" && (
           <button
             className="continue-btn"
-            style={{ background: "#ffd21f", color: "#171717", fontWeight: "bold" }}
+            style={{ background: "#FDE10F", color: "#171717", fontWeight: "bold" }}
             disabled={acting}
             onClick={handlePickup}
           >
@@ -249,7 +249,7 @@ function ActiveDelivery() {
         {activeJob.status === "PICKED_UP" && (
           <button
             className="continue-btn"
-            style={{ background: "#ed1c24", color: "#fff" }}
+            style={{ background: "#D4030B", color: "#fff" }}
             disabled={acting}
             onClick={handleInTransit}
           >

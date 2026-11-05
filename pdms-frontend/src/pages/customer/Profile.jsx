@@ -179,14 +179,14 @@ function Profile() {
           <div
             className="profile-menu-item logout"
             onClick={handleLogout}
-            style={{ cursor: "pointer", color: "#ed1c24" }}
+            style={{ cursor: "pointer", color: "#D4030B" }}
           >
-            <div className="profile-menu-icon" style={{ color: "#ed1c24" }}>
+            <div className="profile-menu-icon" style={{ color: "#D4030B" }}>
               <LogOut size={20} />
             </div>
 
             <div className="profile-menu-text">
-              <strong style={{ color: "#ed1c24" }}>Log Out</strong>
+              <strong style={{ color: "#D4030B" }}>Log Out</strong>
               <span>Sign out of your account</span>
             </div>
 

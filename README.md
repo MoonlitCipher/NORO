@@ -123,6 +123,10 @@ npm run dev
 ```
 - Open web app: `http://localhost:5173/`
 
+### Android App Build
+
+The frontend can also be packaged as an Android app with Capacitor. GitHub Actions builds a debug APK when frontend changes are pushed to `main` or `master`, and on pull requests. See [pdms-frontend/MOBILE.md](pdms-frontend/MOBILE.md) for APK download and API URL setup instructions.
+
 ---
 
 ## Frontend Portals & Routes

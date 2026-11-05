@@ -74,7 +74,7 @@ function Earnings() {
             marginBottom: "16px",
           }}
         >
-          <span style={{ fontSize: "13px", color: "#ffd21f", textTransform: "uppercase", letterSpacing: "1px" }}>
+          <span style={{ fontSize: "13px", color: "#FDE10F", textTransform: "uppercase", letterSpacing: "1px" }}>
             Total Lifetime Earnings
           </span>
           <h2 style={{ fontSize: "32px", margin: "8px 0" }}>
@@ -93,7 +93,7 @@ function Earnings() {
               onClick={handleRequestPayout}
               disabled={requesting || (data?.pendingSettlementPaise || 0) <= 0}
               style={{
-                background: "#ffd21f",
+                background: "#FDE10F",
                 color: "#171717",
                 border: "none",
                 borderRadius: "8px",
